@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auto MPG: polynomial regression · Sergio Castillo</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<p class="brand"><a href="../../../index.html">Sergio Castillo</a></p>
+<nav aria-label="Main"><a href="../../../index.html">Home</a> <a href="../../../index.html#trading">Trading</a> <a href="../../../index.html#analytics">Analytics</a> <a href="../../../index.html#ml-regression" aria-current="page">ML regression</a></nav>
+</div>
+</header>
+<main class="wrap">
+<h1>Auto MPG: polynomial regression</h1>
+<p class="links"><a href="notebook.html">Rendered notebook</a> · <a href="mpg_PR.ipynb" download>Download .ipynb</a> · <a href="README.md">Project README</a> · <a href="../../../index.html#ml-regression">All ML regression projects</a></p>
+<h2>Question</h2>
+<p>Does a polynomial in horsepower predict fuel economy (mpg) better than a straight line, which degree works best, and how does a multi-feature model compare?</p>
+<h2>Data</h2>
+<p><a href="https://archive.ics.uci.edu/dataset/9/auto+mpg">Auto MPG</a> from the UCI Machine Learning Repository, using the CSV copy on <a href="https://www.kaggle.com/datasets/uciml/autompg-dataset">Kaggle</a>: 398 cars, with 6 rows missing horsepower dropped (392 left). The notebook loads it into a local PostgreSQL table <code>auto_mpg</code> and logs metrics to <code>model_results</code>. The CSV is not included in this repository.</p>
+<p class="note">Database: the published notebooks connect with <code>postgresql+psycopg2://postgres@localhost:5432/postgres</code>. The local login is read from <code>~/.pgpass</code> and is not in this repository. The original connection string was edited for publishing; nothing else in the notebook was changed except local file paths in warning messages.</p>
+<h2>Methods and tools</h2>
+<p class="tools">Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib</p>
+<ul><li>80/20 train/test split (<code>random_state=42</code>).</li>
+<li>Horsepower only: linear regression vs <code>PolynomialFeatures</code> of degree 2 and 3.</li>
+<li>Degree sweep 1–10: train RMSE, test RMSE and 5-fold cross-validated RMSE on the training set.</li>
+<li>Multi-feature model: displacement, horsepower, weight, model year and two origin dummies (6 features), linear regression. A scaled degree-2 pipeline on the same features is fitted in the last cell, but its metrics are not printed.</li></ul>
+<h2>Results (test set)</h2>
+<table><thead><tr><th>Model</th><th>RMSE (mpg)</th><th>MAE</th><th>R²</th></tr></thead><tbody><tr><td>Linear, horsepower</td><td>4.71</td><td>3.78</td><td>0.566</td></tr><tr><td>Degree 2, horsepower</td><td>4.29</td><td>3.26</td><td>0.639</td></tr><tr><td>Degree 3, horsepower</td><td>4.30</td><td>3.24</td><td>0.638</td></tr><tr><td>Linear, 6 features</td><td><strong>3.29</strong></td><td>2.48</td><td><strong>0.787</strong></td></tr></tbody></table>
+<h2>Degree sweep (horsepower only)</h2>
+<table><thead><tr><th>Degree</th><th>Train RMSE</th><th>Test RMSE</th><th>CV RMSE</th></tr></thead><tbody><tr><td>1</td><td>4.95</td><td>4.71</td><td>4.94</td></tr><tr><td>2</td><td>4.38</td><td>4.29</td><td>4.37</td></tr><tr><td>3</td><td>4.38</td><td>4.30</td><td>4.37</td></tr><tr><td>4</td><td>4.37</td><td>4.27</td><td>4.40</td></tr><tr><td>5</td><td>4.32</td><td>4.23</td><td>4.38</td></tr><tr><td>6</td><td>4.34</td><td>4.26</td><td>4.38</td></tr><tr><td>7</td><td>4.34</td><td>4.27</td><td>4.36</td></tr><tr><td>8</td><td>4.33</td><td>4.28</td><td>4.35</td></tr><tr><td>9</td><td>4.34</td><td>4.30</td><td>4.37</td></tr><tr><td>10</td><td>4.41</td><td>4.35</td><td>4.47</td></tr></tbody></table>
+<h2>Key findings</h2>
+<ul><li>A curve fits much better than a line: going from degree 1 to degree 2 cuts test RMSE from <strong>4.71</strong> to <strong>4.29</strong> mpg and CV RMSE from 4.94 to 4.37.</li>
+<li>Higher degrees add little: CV RMSE stays between 4.35 and 4.47 from degree 2 to 10. The notebook logs degree 2 with CV RMSE 4.37.</li>
+<li>Adding features matters more than adding degrees: the 6-feature linear model reaches test RMSE <strong>3.29</strong> and R² <strong>0.787</strong>.</li></ul>
+<h2>Charts</h2>
+<figure><img src="fitted_curves.png" alt="Fitted linear, degree 2 and degree 3 curves of mpg vs horsepower"><figcaption>Linear (blue), degree 2 (green) and degree 3 (yellow) fits of mpg on horsepower, test points in red. Saved by the notebook (the saved file has no legend).</figcaption></figure>
+<figure><img src="rmse_by_degree.png" alt="RMSE by polynomial degree"><figcaption>Train, test and 5-fold CV RMSE by polynomial degree (saved by the notebook).</figcaption></figure>
+<h2 id="notebooks">Notebook</h2>
+<p><a href="notebook.html">mpg_PR (rendered)</a> · <a href="mpg_PR.ipynb" download>mpg_PR.ipynb</a>. 32 code cells (26 with outputs, 4 charts), 3 markdown cells.</p>
+<p class="note">Run top to bottom (execution counts 1–31); the last code cell is empty. The <code>model_results</code> table shown in the notebook holds repeated rows from several runs. The sweep and final cells show harmless NumPy <code>RuntimeWarning</code> messages from scikit-learn’s matrix multiply.</p>
+</main>
+<footer class="wrap"><p>Sergio Castillo · Data Analytics Portfolio</p></footer>
+</body>
+</html>

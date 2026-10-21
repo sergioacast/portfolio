@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insurance charges: multiple linear regression · Sergio Castillo</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<p class="brand"><a href="../../../index.html">Sergio Castillo</a></p>
+<nav aria-label="Main"><a href="../../../index.html">Home</a> <a href="../../../index.html#trading">Trading</a> <a href="../../../index.html#analytics">Analytics</a> <a href="../../../index.html#ml-regression" aria-current="page">ML regression</a></nav>
+</div>
+</header>
+<main class="wrap">
+<h1>Insurance charges: multiple linear regression</h1>
+<p class="links"><a href="notebook.html">Rendered notebook</a> · <a href="insurance_nb.ipynb" download>Download .ipynb</a> · <a href="README.md">Project README</a> · <a href="../../../index.html#ml-regression">All ML regression projects</a></p>
+<h2>Question</h2>
+<p>How well can a multiple linear regression predict individual medical insurance charges from age, sex, BMI, number of children, smoking status and region, and does a smoker × BMI interaction help?</p>
+<h2>Data</h2>
+<p><a href="https://www.kaggle.com/datasets/mirichoi0218/insurance">Medical Cost Personal Datasets</a> (Kaggle, <code>insurance.csv</code>): 1,338 people, no missing values. The notebook loads it into a local PostgreSQL table <code>insurance</code>, explores it with SQL, and logs model metrics to <code>model_results</code>. The CSV is not included in this repository.</p>
+<p class="note">Database: the published notebooks connect with <code>postgresql+psycopg2://postgres@localhost:5432/postgres</code>. The local login is read from <code>~/.pgpass</code> and is not in this repository. The original connection string was edited for publishing; nothing else in the notebook was changed except local file paths in warning messages.</p>
+<h2>Methods and tools</h2>
+<p class="tools">Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib, statsmodels</p>
+<ul><li>Sex and smoker encoded as 0/1; region one-hot encoded with the first level dropped.</li>
+<li>Interaction feature <code>smoker_bmi</code> = smoker × BMI.</li>
+<li>80/20 train/test split (<code>random_state=42</code>), scikit-learn <code>LinearRegression</code>; a variant trained on log(charges) and converted back to dollars.</li>
+<li>statsmodels OLS summary and variance inflation factors (VIF); 5-fold cross-validation (RMSE).</li></ul>
+<h2>Exploration (SQL)</h2>
+<table><thead><tr><th>Group</th><th>Average charges</th><th>People</th></tr></thead><tbody><tr><td>Smokers</td><td>$32,050</td><td>274</td></tr><tr><td>Non-smokers</td><td>$8,434</td><td>1,064</td></tr><tr><td>BMI ≥ 30 (obese)</td><td>$15,561</td><td>705</td></tr><tr><td>BMI 25–30 (overweight)</td><td>$10,995</td><td>388</td></tr><tr><td>BMI &lt; 25 (normal)</td><td>$10,282</td><td>245</td></tr><tr><td>Southeast (highest region)</td><td>$14,735</td><td>364</td></tr></tbody></table>
+<h2>Results (test set)</h2>
+<table><thead><tr><th>Model</th><th>R²</th><th>RMSE</th><th>MAE</th></tr></thead><tbody><tr><td>Baseline, no interaction (logged as <code>mlr_baseline</code>)</td><td>0.784</td><td>$5,796</td><td>$4,181</td></tr><tr><td>Log target, back-transformed (<code>mlr_log</code>)</td><td>0.607</td><td>$7,815</td><td>$3,889</td></tr><tr><td>With smoker × BMI interaction</td><td><strong>0.865</strong></td><td>$4,574</td><td>$2,757</td></tr></tbody></table>
+<p class="note">The first two rows come from the notebook’s <code>model_results</code> query; the interaction row is the printed evaluation (R² 0.8653, RMSE 4,573.81, MAE 2,756.90), also logged as <code>mlr_interaction</code>.</p>
+<h2>Key findings</h2>
+<ul><li>Adding the smoker × BMI interaction lifts test R² from <strong>0.784</strong> to <strong>0.865</strong> and cuts MAE from $4,181 to <strong>$2,757</strong>.</li>
+<li>5-fold cross-validated RMSE for the interaction model: <strong>$4,850 ± $392</strong> (folds from $4,185 to $5,198).</li>
+<li>In the OLS fit on the training set (R² 0.834), the interaction term is large and clear: +$1,470.86 per BMI point for smokers (t = 24.3).</li>
+<li>Modelling log(charges) did worse in dollar terms (R² 0.607).</li>
+<li>VIFs for the baseline features are all at most 1.61, so collinearity is not a concern.</li></ul>
+<h2>Charts</h2>
+<figure><img src="charges_histogram.png" alt="Histogram of insurance charges"><figcaption>Distribution of insurance charges, 50 bins (from the notebook).</figcaption></figure>
+<figure><img src="residuals.png" alt="Residuals vs predicted charges"><figcaption>Residuals vs predicted charges on the test set, interaction model by execution order (from the notebook; axes unlabeled in the original).</figcaption></figure>
+<h2 id="notebooks">Notebook</h2>
+<p><a href="notebook.html">insurance_nb (rendered)</a> · <a href="insurance_nb.ipynb" download>insurance_nb.ipynb</a>. 26 code cells (23 with outputs, 2 charts), 1 markdown cell.</p>
+<p class="note">The notebook was run out of order (execution counts 2–55, not top to bottom). The coefficient printout and the VIF table come from the model without the interaction term; the printed R², the OLS summary and the cross-validation use the interaction feature. Some cells also show harmless NumPy <code>RuntimeWarning</code> messages from scikit-learn’s matrix multiply.</p>
+</main>
+<footer class="wrap"><p>Sergio Castillo · Data Analytics Portfolio</p></footer>
+</body>
+</html>

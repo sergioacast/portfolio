@@ -1,6 +1,6 @@
 # Late Deliveries (Olist)
 
-Live page: https://sergioacast.github.io/analytics-portfolio/projects/late-deliveries/ · Notebook: [late_deliveries.ipynb](late_deliveries.ipynb) · [Rendered notebook](https://sergioacast.github.io/analytics-portfolio/projects/late-deliveries/notebook.html)
+Live page: https://sergioacast.github.io/portfolio/projects/analytics/late-deliveries/ · Notebook: [late_deliveries.ipynb](late_deliveries.ipynb) · [Rendered notebook](https://sergioacast.github.io/portfolio/projects/analytics/late-deliveries/notebook.html)
 
 ## Question
 

@@ -32,3 +32,5 @@ figure img{max-width:100%;height:auto;border:1px solid #e3e3e3;background:#fff}
 figcaption{font-size:.88rem;color:#666}
 .note{font-size:.88rem;color:#666}
 footer{border-top:1px solid #e3e3e3;color:#777;font-size:.85rem;padding-top:.5rem;padding-bottom:2rem}
+.card h3{font-size:1.1rem;margin:0 0 .5rem}
+section > h2{margin-top:2.25rem}

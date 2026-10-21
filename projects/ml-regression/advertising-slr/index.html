@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advertising: simple linear regression · Sergio Castillo</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<p class="brand"><a href="../../../index.html">Sergio Castillo</a></p>
+<nav aria-label="Main"><a href="../../../index.html">Home</a> <a href="../../../index.html#trading">Trading</a> <a href="../../../index.html#analytics">Analytics</a> <a href="../../../index.html#ml-regression" aria-current="page">ML regression</a></nav>
+</div>
+</header>
+<main class="wrap">
+<h1>Advertising: simple linear regression</h1>
+<p class="links"><a href="notebook.html">Rendered notebook</a> · <a href="TV_slr_model.ipynb" download>Download .ipynb</a> · <a href="README.md">Project README</a> · <a href="../../../index.html#ml-regression">All ML regression projects</a></p>
+<h2>Question</h2>
+<p>Which single advertising channel (TV, radio or newspaper) best explains product sales, fitting one simple linear regression per channel?</p>
+<p><strong>Answer (from Sergio’s README):</strong> TV. It explains about two-thirds of the variation in sales on the test set; radio has a bigger slope but explains about 26%, and newspaper about 3%. The README recommends TV as the most reliable channel and testing TV and radio together next, and notes that the relationship alone doesn’t prove TV ads cause the extra sales.</p>
+<h2>Data</h2>
+<p><a href="https://www.statlearning.com/resources-first-edition">Advertising.csv</a> from <em>An Introduction to Statistical Learning</em> (ISLR): 200 markets with TV, radio and newspaper budgets and sales. The local file is byte-identical to the ISLR download. The notebook loads it into a local PostgreSQL table <code>advertising</code> and logs each model’s metrics to a <code>model_results</code> table. The CSV is not included in this repository.</p>
+<p class="note">Database: the published notebooks connect with <code>postgresql+psycopg2://postgres@localhost:5432/postgres</code>. The local login is read from <code>~/.pgpass</code> and is not in this repository. The original connection string was edited for publishing; nothing else in the notebook was changed except local file paths in warning messages.</p>
+<h2>Methods and tools</h2>
+<p class="tools">Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib</p>
+<ul><li>One <code>LinearRegression</code> per channel: sales ~ TV, sales ~ radio, sales ~ newspaper.</li>
+<li>80/20 train/test split (<code>random_state=42</code>); RMSE, R² and MAE on the test set.</li>
+<li>Scatter, fitted line and residual plot for each channel; metrics logged to Postgres and read back with SQL.</li></ul>
+<h2>Results (test set)</h2>
+<table><thead><tr><th>Channel</th><th>Slope</th><th>Intercept</th><th>R²</th><th>RMSE</th><th>MAE</th></tr></thead><tbody><tr><td>TV</td><td>0.0465</td><td>7.120</td><td>0.677</td><td>3.194</td><td>2.444</td></tr><tr><td>Radio</td><td>0.2044</td><td>9.424</td><td>0.263</td><td>4.822</td><td>3.930</td></tr><tr><td>Newspaper</td><td>0.0598</td><td>12.311</td><td>0.030</td><td>5.534</td><td>4.782</td></tr></tbody></table>
+<p class="note">Values rounded from the notebook output and the <code>model_results</code> query at the end of the notebook. Sales are in the dataset’s units (Sergio’s README reads the TV slope as about 47 extra units per $1,000 of TV spend and the TV RMSE as about 3,200 units).</p>
+<h2>Key findings</h2>
+<ul><li>TV has the best fit: <strong>R² 0.677</strong>, RMSE 3.19, MAE 2.44.</li>
+<li>Radio has the largest slope (0.204 vs 0.047 for TV) but a much weaker fit: R² 0.263, RMSE 4.82.</li>
+<li>Newspaper explains almost nothing: <strong>R² 0.030</strong>, RMSE 5.53.</li></ul>
+<h2>Charts</h2>
+<figure><img src="tv_fit.png" alt="Scatter of TV advertising vs sales with fitted regression line"><figcaption>TV advertising vs sales on the test set, with the fitted line (from the notebook).</figcaption></figure>
+<figure><img src="tv_residuals.png" alt="Residuals vs predicted sales for the TV model"><figcaption>TV model: residuals vs predicted sales on the test set (from the notebook; axes unlabeled in the original).</figcaption></figure>
+<figure><img src="radio_fit.png" alt="Scatter of radio advertising vs sales with fitted line"><figcaption>Radio advertising vs sales on the test set, with the fitted line (from the notebook).</figcaption></figure>
+<figure><img src="newspaper_fit.png" alt="Scatter of newspaper advertising vs sales with fitted line"><figcaption>Newspaper advertising vs sales on the test set, with the fitted line (from the notebook).</figcaption></figure>
+<h2 id="notebooks">Notebook</h2>
+<p><a href="notebook.html">TV_slr_model (rendered)</a> · <a href="TV_slr_model.ipynb" download>TV_slr_model.ipynb</a>. 30 code cells (24 with outputs, 9 charts), 4 markdown cells.</p>
+<p class="note">The notebook was run out of order (execution counts range from 27 to 141), so cells show results from different moments of one session. One cell drops and recreates the <code>model_results</code> table.</p>
+</main>
+<footer class="wrap"><p>Sergio Castillo · Data Analytics Portfolio</p></footer>
+</body>
+</html>

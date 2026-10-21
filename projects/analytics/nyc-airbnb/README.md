@@ -1,6 +1,6 @@
 # NYC Airbnb 2019
 
-Live page: https://sergioacast.github.io/analytics-portfolio/projects/nyc-airbnb/ · Notebook: [nyc_airbnb.ipynb](nyc_airbnb.ipynb) · [Rendered notebook](https://sergioacast.github.io/analytics-portfolio/projects/nyc-airbnb/notebook.html)
+Live page: https://sergioacast.github.io/portfolio/projects/analytics/nyc-airbnb/ · Notebook: [nyc_airbnb.ipynb](nyc_airbnb.ipynb) · [Rendered notebook](https://sergioacast.github.io/portfolio/projects/analytics/nyc-airbnb/notebook.html)
 
 ## Question
 

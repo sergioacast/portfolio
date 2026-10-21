@@ -1,6 +1,6 @@
 # Superstore EDA
 
-Live page: https://sergioacast.github.io/analytics-portfolio/projects/superstore/ · Notebook: [superstore_eda.ipynb](superstore_eda.ipynb) · [Rendered notebook](https://sergioacast.github.io/analytics-portfolio/projects/superstore/notebook.html)
+Live page: https://sergioacast.github.io/portfolio/projects/analytics/superstore/ · Notebook: [superstore_eda.ipynb](superstore_eda.ipynb) · [Rendered notebook](https://sergioacast.github.io/portfolio/projects/analytics/superstore/notebook.html)
 
 ## Question
 
