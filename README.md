@@ -76,7 +76,7 @@ Exploratory and SQL analysis of public datasets.
 
 ## ML regression
 
-Three supervised regression exercises (scikit-learn, data loaded into PostgreSQL). The published notebooks connect without a password in the connection string; the local Postgres password lives in `~/.pgpass`.
+Four supervised regression exercises (scikit-learn, data loaded into PostgreSQL). The published notebooks connect without a password in the connection string; the local Postgres password lives in `~/.pgpass`.
 
 ### [Advertising: simple linear regression](projects/ml-regression/advertising-slr/)
 
@@ -101,6 +101,14 @@ Three supervised regression exercises (scikit-learn, data loaded into PostgreSQL
 - Degree 2 cuts test RMSE from 4.71 to **4.29** mpg; higher degrees add little. A 6-feature linear model reaches RMSE **3.29**, R² 0.787.
 
 [Project README](projects/ml-regression/auto-mpg-poly/README.md) · [Notebook (.ipynb)](projects/ml-regression/auto-mpg-poly/mpg_PR.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/ml-regression/auto-mpg-poly/)
+
+### [Concrete strength: support vector regression](projects/ml-regression/concrete-svr/)
+
+**Question:** How well does a tuned SVR predict concrete compressive strength, and how much do scaling and tuning matter?
+
+- Tuned RBF SVR (C=1000, epsilon=3, gamma=0.05) reaches test RMSE **5.84** MPa, R² **0.868**, vs 9.73 linear, 7.38 degree-2 polynomial and 14.16 unscaled SVR.
+
+[Project README](projects/ml-regression/concrete-svr/README.md) · [Notebook (.ipynb)](projects/ml-regression/concrete-svr/concrete_svr.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/ml-regression/concrete-svr/)
 
 ## Repository structure
 

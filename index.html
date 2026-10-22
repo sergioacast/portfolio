@@ -66,7 +66,7 @@
 </section>
 <section id="ml-regression">
 <h2>ML regression</h2>
-<p class="lede">Three supervised regression exercises in Python and scikit-learn, each with data loaded into PostgreSQL and metrics logged with SQL.</p>
+<p class="lede">Four supervised regression exercises in Python and scikit-learn, each with data loaded into PostgreSQL and metrics logged with SQL.</p>
 <div class="cards">
 <article class="card">
 <h3><a href="projects/ml-regression/advertising-slr/index.html">Advertising: simple linear regression</a></h3>
@@ -88,6 +88,13 @@
 <p class="tools"><strong>Tools:</strong> Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib</p>
 <ul><li>Degree 2 cuts test RMSE from 4.71 to <strong>4.29</strong> mpg (CV 4.94 → 4.37); higher degrees add little.</li><li>A 6-feature linear model does better still: RMSE <strong>3.29</strong>, R² 0.787.</li></ul>
 <p class="links"><a href="projects/ml-regression/auto-mpg-poly/index.html">Project page</a> · <a href="projects/ml-regression/auto-mpg-poly/notebook.html">Rendered notebook</a> · <a href="projects/ml-regression/auto-mpg-poly/mpg_PR.ipynb" download>Download .ipynb</a></p>
+</article>
+<article class="card">
+<h3><a href="projects/ml-regression/concrete-svr/index.html">Concrete strength: support vector regression</a></h3>
+<p class="q"><strong>Question:</strong> How well does a tuned SVR predict concrete compressive strength, and how much do scaling and tuning matter?</p>
+<p class="tools"><strong>Tools:</strong> Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib, seaborn</p>
+<ul><li>Tuned RBF SVR (C=1000, epsilon=3, gamma=0.05): test RMSE <strong>5.84</strong> MPa, MAE 4.19, <strong>R² 0.868</strong>.</li><li>Beats linear (9.73) and degree-2 polynomial (7.38); unscaled SVR was worst at 14.16.</li></ul>
+<p class="links"><a href="projects/ml-regression/concrete-svr/index.html">Project page</a> · <a href="projects/ml-regression/concrete-svr/notebook.html">Rendered notebook</a> · <a href="projects/ml-regression/concrete-svr/concrete_svr.ipynb" download>Download .ipynb</a></p>
 </article>
 </div>
 </section>

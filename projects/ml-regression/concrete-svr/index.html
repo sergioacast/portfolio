@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concrete strength: support vector regression · Sergio Castillo</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<p class="brand"><a href="../../../index.html">Sergio Castillo</a></p>
+<nav aria-label="Main"><a href="../../../index.html">Home</a> <a href="../../../index.html#trading">Trading</a> <a href="../../../index.html#analytics">Analytics</a> <a href="../../../index.html#ml-regression" aria-current="page">ML regression</a></nav>
+</div>
+</header>
+<main class="wrap">
+<h1>Concrete strength: support vector regression</h1>
+<p class="links"><a href="notebook.html">Rendered notebook</a> · <a href="concrete_svr.ipynb" download>Download .ipynb</a> · <a href="README.md">Project README</a> · <a href="../../../index.html#ml-regression">All ML regression projects</a></p>
+<h2>Question</h2>
+<p>How well can a support vector regression model predict concrete compressive strength from the mix recipe and age, and how much do feature scaling and hyperparameter tuning matter compared with linear and polynomial baselines?</p>
+<h2>Data</h2>
+<p><a href="https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength">Concrete Compressive Strength</a> from the UCI Machine Learning Repository: 1,030 mixes with 8 inputs (cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, age) and compressive strength in MPa. The notebook loads it into a local PostgreSQL table <code>concrete</code>, summarises it with SQL (strength by age bucket and by water/cement ratio) and adds an engineered <code>wc_ratio</code> = water / cement, for 9 features. The data file is not included in this repository.</p>
+<p class="note">Database: the published notebooks connect with <code>postgresql+psycopg2://postgres@localhost:5432/postgres</code>. The local login is read from <code>~/.pgpass</code> and is not in this repository. The original connection string was edited for publishing; nothing else in the notebook was changed except local file paths in warning messages.</p>
+<h2>Methods and tools</h2>
+<p class="tools">Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib, seaborn</p>
+<ul><li>80/20 train/test split (<code>random_state=42</code>): 824 training and 206 test rows, 9 features.</li>
+<li>Baselines: linear regression and a scaled degree-2 polynomial pipeline.</li>
+<li>SVR: RBF kernel without scaling, then <code>StandardScaler</code> + SVR with RBF and linear kernels (default settings).</li>
+<li>Tuning: <code>GridSearchCV</code> (5-fold, RMSE scoring) over C ∈ {1000, 3000}, epsilon ∈ {2, 3}, gamma ∈ {0.02, 0.05}; then a 5 × 5 C × gamma grid at epsilon 3 for the heatmap.</li></ul>
+<h2>Results (test set)</h2>
+<table><thead><tr><th>Model</th><th>RMSE (MPa)</th><th>MAE</th><th>R²</th></tr></thead><tbody><tr><td>Linear regression</td><td>9.73</td><td>7.64</td><td>0.633</td></tr><tr><td>Polynomial degree 2 (scaled)</td><td>7.38</td><td>5.93</td><td>0.788</td></tr><tr><td>SVR RBF, unscaled</td><td>14.16</td><td>–</td><td>–</td></tr><tr><td>SVR RBF, scaled (defaults)</td><td>9.37</td><td>–</td><td>–</td></tr><tr><td>SVR linear, scaled (defaults)</td><td>10.88</td><td>–</td><td>–</td></tr><tr><td>SVR RBF, tuned (C=1000, epsilon=3, gamma=0.05)</td><td><strong>5.84</strong></td><td><strong>4.19</strong></td><td><strong>0.868</strong></td></tr></tbody></table>
+<p class="note">The notebook prints only RMSE for the three untuned SVR models.</p>
+<h2>Key findings</h2>
+<ul><li>Scaling is essential for SVR: the unscaled RBF model (RMSE <strong>14.16</strong>) is worse than plain linear regression (9.73); scaling alone brings it to 9.37.</li>
+<li>Tuning does the rest: the best grid setting (C=1000, epsilon=3, gamma=0.05, 5-fold CV RMSE 5.96) reaches test RMSE <strong>5.84</strong>, MAE <strong>4.19</strong> and R² <strong>0.868</strong>, ahead of the degree-2 polynomial (7.38).</li>
+<li>In the C × gamma heatmap, CV RMSE ranges from 16.79 (C=0.1, gamma=0.001) to 5.96 (C=1000, gamma=0.05); large C with moderate gamma works best.</li>
+<li>SQL summaries: average strength rises with age (22.3 MPa at ≤7 days to 49.6 MPa beyond 90 days) and falls as water/cement rises (56.3 MPa for low, 29.1 MPa for high).</li></ul>
+<h2>Charts</h2>
+<figure><img src="svr_rbf_tuned.png" alt="Actual vs predicted compressive strength for the tuned SVR"><figcaption>Tuned RBF SVR: actual vs predicted strength on the test set, with the 45° line in red (saved by the notebook).</figcaption></figure>
+<figure><img src="heatmap_C_gamma.png" alt="Heatmap of 5-fold CV RMSE by C and gamma"><figcaption>5-fold CV RMSE by C and gamma at epsilon 3 (saved by the notebook).</figcaption></figure>
+<h2 id="notebooks">Notebook</h2>
+<p><a href="notebook.html">concrete_svr (rendered)</a> · <a href="concrete_svr.ipynb" download>concrete_svr.ipynb</a>. 30 code cells (24 with outputs, 2 charts), 11 markdown cells.</p>
+<p class="note">Run top to bottom (execution counts 1–31; count 4 belongs to a duplicate cell removed after the run). Lines that write to <code>model_results</code> are commented out. The baseline cells show harmless NumPy <code>RuntimeWarning</code> messages from scikit-learn’s matrix multiply.</p>
+</main>
+<footer class="wrap"><p>Sergio Castillo · Data Analytics Portfolio</p></footer>
+</body>
+</html>
