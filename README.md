@@ -6,6 +6,46 @@ Data analyst working in Python and SQL/PostgreSQL.
 
 Projects are grouped by area of work. Each project folder has its own README, a project page, the rendered notebook(s) and the original `.ipynb`.
 
+## Analytics
+
+Exploratory and SQL analysis of public datasets.
+
+### [Late Deliveries (Olist)](projects/analytics/late-deliveries/)
+
+**Question:** Which origin→destination routes and seller areas miss the promised delivery window most, and is lateness getting worse?
+
+**Tools:** Python, pandas, PostgreSQL, SQLAlchemy, SQL (CTEs, FILTER, BOOL_OR), matplotlib
+
+- Overall late rate: **8.11%** (7826 of 96470 late-eligible delivered orders); pandas and SQL agree.
+- Monthly late rate peaked at **21.36%** in March 2018 (15.99% in February 2018, 14.31% in November 2017).
+- In the Feb–Mar 2018 spike, **SP→CE** went from 9.43% late (normal) to **48.95%**.
+
+[Project README](projects/analytics/late-deliveries/README.md) · [Notebook (.ipynb)](projects/analytics/late-deliveries/late_deliveries.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/late-deliveries/)
+
+### [Superstore EDA](projects/analytics/superstore/)
+
+**Question:** Where does Superstore lose profit, how much of it is driven by discounting, and what would a 20% discount cap change?
+
+**Tools:** Python, pandas, matplotlib
+
+- Discounts above 20% lose money: 21–30% bin −$10,369, 31–50% −$48,448, 51–80% −$76,559 total profit.
+- Worst cell: **Binders at 51–80% discount**, −$38,510 profit on 613 lines. Tables lose −$17,725 overall.
+- A 20% discount cap (1393 lines affected) moves modelled profit from $286,397 to **$505,588**, assuming sales volume stays the same.
+
+[Project README](projects/analytics/superstore/README.md) · [Notebook (.ipynb)](projects/analytics/superstore/superstore_eda.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/superstore/)
+
+### [NYC Airbnb 2019](projects/analytics/nyc-airbnb/)
+
+**Question:** How are NYC Airbnb listing prices distributed, and how do they vary by borough, room type, reviews, availability and minimum nights?
+
+**Tools:** Python, pandas, NumPy, matplotlib
+
+- Prices range from $0 to $10,000; mean $152.72 vs median 106.0.
+- “Expensive typical” cell: **Manhattan Entire home**, median ~$191 on 13199 listings. Staten Island Entire’s high mean is a luxury-tail story (median ~$100).
+- availability_365 == 0 for **17,533** listings (~36%), kept rather than silently dropped.
+
+[Project README](projects/analytics/nyc-airbnb/README.md) · [Notebook (.ipynb)](projects/analytics/nyc-airbnb/nyc_airbnb.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/nyc-airbnb/)
+
 ## Trading
 
 Strategy research and backtests, judged after costs.
@@ -34,47 +74,7 @@ Two intraday EURUSD strategies, specified before coding and backtested bar-by-ba
 
 [Project README](projects/trading/trend-backtest/README.md) · [Research note](projects/trading/trend-backtest/reports/research_note.md) · [Notebooks](projects/trading/trend-backtest/notebooks/) · [Live page](https://sergioacast.github.io/portfolio/projects/trading/trend-backtest/)
 
-## Analytics
-
-Exploratory and SQL analysis of public datasets.
-
-### [Late Deliveries (Olist)](projects/analytics/late-deliveries/)
-
-**Question:** Which origin→destination routes and seller areas miss the promised delivery window most, and is lateness getting worse?
-
-**Tools:** Python, pandas, PostgreSQL, SQLAlchemy, SQL (CTEs, FILTER, BOOL_OR), matplotlib
-
-- Overall late rate: **8.11%** (7826 of 96470 late-eligible delivered orders); pandas and SQL agree.
-- Monthly late rate peaked at **21.36%** in March 2018 (15.99% in February 2018, 14.31% in November 2017).
-- In the Feb–Mar 2018 spike, **SP→CE** went from 9.43% late (normal) to **48.95%**.
-
-[Project README](projects/analytics/late-deliveries/README.md) · [Notebook (.ipynb)](projects/analytics/late-deliveries/late_deliveries.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/late-deliveries/)
-
-### [NYC Airbnb 2019](projects/analytics/nyc-airbnb/)
-
-**Question:** How are NYC Airbnb listing prices distributed, and how do they vary by borough, room type, reviews, availability and minimum nights?
-
-**Tools:** Python, pandas, NumPy, matplotlib
-
-- Prices range from $0 to $10,000; mean 152.720687 vs median 106.0.
-- “Expensive typical” cell: **Manhattan Entire home**, median ~$191 on 13199 listings. Staten Island Entire’s high mean is a luxury-tail story (median ~$100).
-- availability_365 == 0 for **17,533** listings (~36%), kept rather than silently dropped.
-
-[Project README](projects/analytics/nyc-airbnb/README.md) · [Notebook (.ipynb)](projects/analytics/nyc-airbnb/nyc_airbnb.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/nyc-airbnb/)
-
-### [Superstore EDA](projects/analytics/superstore/)
-
-**Question:** Where does Superstore lose profit, how much of it is driven by discounting, and what would a 20% discount cap change?
-
-**Tools:** Python, pandas, matplotlib
-
-- Discounts above 20% lose money: 21–30% bin −10369.2774, 31–50% −48447.7273, 51–80% −76559.0513 total profit.
-- Worst cell: **Binders at 51–80% discount**, −38510.4964 profit on 613 lines. Tables lose −17725.4811 overall.
-- A 20% discount cap (1393 lines affected) moves modelled profit from 286397.0217 to **505588.0159**.
-
-[Project README](projects/analytics/superstore/README.md) · [Notebook (.ipynb)](projects/analytics/superstore/superstore_eda.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/analytics/superstore/)
-
-## ML regression
+## ML exercises
 
 Four supervised regression exercises (scikit-learn, data loaded into PostgreSQL). The published notebooks connect without a password in the connection string; the local Postgres password lives in `~/.pgpass`.
 
@@ -118,22 +118,21 @@ Four supervised regression exercises (scikit-learn, data loaded into PostgreSQL)
 ├── style.css               shared stylesheet
 ├── .nojekyll               serve files as-is (no Jekyll build)
 ├── projects/
+│   ├── analytics/
+│   │   ├── late-deliveries/    project page, README, notebook.html, .ipynb, charts
+│   │   ├── superstore/
+│   │   └── nyc-airbnb/
 │   ├── trading/
 │   │   ├── eurusd-intraday/    project page, README, notebooks/, reports/
 │   │   └── trend-backtest/     project page, README, notebooks/, reports/, charts
-│   ├── analytics/
-│   │   ├── late-deliveries/    project page, README, notebook.html, .ipynb, charts
-│   │   ├── nyc-airbnb/
-│   │   └── superstore/
-│   ├── ml-regression/
-│   │   ├── advertising-slr/    project page, README, notebook.html, .ipynb, charts
-│   │   ├── insurance-mlr/
-│   │   └── auto-mpg-poly/
-│   └── <old-slug>/             redirect stubs for pre-reorganisation URLs
+│   └── ml-regression/          "ML exercises" section on the site
+│       ├── advertising-slr/    project page, README, notebook.html, .ipynb, charts
+│       ├── insurance-mlr/
+│       ├── auto-mpg-poly/
+│       └── concrete-svr/
 └── README.md
 ```
 
-Old URLs such as `/portfolio/projects/superstore/` still work: the folders directly under `projects/` (other than the three area folders) contain only small meta-refresh pages pointing at the new location.
 
 ## How notebooks are rendered
 

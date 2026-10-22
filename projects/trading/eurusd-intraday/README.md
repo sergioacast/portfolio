@@ -37,6 +37,14 @@ Full write-up: [`reports/verdict.md`](reports/verdict.md)
 | 07 | `sessions` | Strategy B's logic run in each trading session |
 | 08 | `robustness` | GBPUSD load, Monte Carlo reshuffle, and the one-time final test |
 
+## Get the data
+
+Source: [HistData](https://www.histdata.com/) free 1-minute (M1) ASCII bars. The data isn't included in this repo.
+
+1. Download the EURUSD and GBPUSD M1 ASCII files for 2015–2025 from HistData and unzip them.
+2. Place the CSVs (named like `DAT_ASCII_EURUSD_M1_2015.csv`, `DAT_ASCII_GBPUSD_M1_2015.csv`) in `data/raw/` inside this project folder; the notebooks read `../data/raw/DAT_ASCII_*_M1_*.csv`.
+3. Follow the Reproduce steps below.
+
 ## Reproduce
 
 1. Download the EURUSD and GBPUSD M1 files for 2015–2025 from HistData into `data/raw/`. The data isn't included in this repo.

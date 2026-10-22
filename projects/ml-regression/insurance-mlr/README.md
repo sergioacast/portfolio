@@ -22,3 +22,11 @@ Notebook: [insurance_nb.ipynb](insurance_nb.ipynb) · [Rendered notebook](notebo
 Note: the notebook was run out of order, so some cells (the coefficient printout and the VIF table) reflect the model without the interaction term.
 
 The published notebook connects with `postgresql+psycopg2://postgres@localhost:5432/postgres`; the local Postgres password lives in `~/.pgpass` and is not in this repository.
+
+## Get the data
+
+Source: [Medical Cost Personal Datasets](https://www.kaggle.com/datasets/mirichoi0218/insurance) (Kaggle). The CSV is not included in this repo.
+
+1. Download `insurance.csv` from the Kaggle page above.
+2. Place it in this folder (`projects/ml-regression/insurance-mlr/`), next to `insurance_nb.ipynb`.
+3. Start a local PostgreSQL and run the notebook top to bottom.

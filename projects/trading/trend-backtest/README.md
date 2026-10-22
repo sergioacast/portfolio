@@ -38,6 +38,13 @@ The full write-up is in `reports/research_note.md`.
 └── README.md
 ```
 
+## Get the data
+
+Source: daily prices for SPY, QQQ and GLD from Yahoo Finance via the [`yfinance`](https://pypi.org/project/yfinance/) package. Nothing needs to be placed by hand.
+
+1. Install the requirements (`pip install -r requirements.txt`) and create the `trading` database (see How to rerun).
+2. Run `notebooks/01_load_data`: it downloads the prices and writes them to the `prices` table.
+
 ## How to rerun
 
 ### 1. Requirements

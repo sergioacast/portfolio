@@ -25,3 +25,11 @@ Notebook: [concrete_svr.ipynb](concrete_svr.ipynb) · [Rendered notebook](notebo
 Charts: [svr_rbf_tuned.png](svr_rbf_tuned.png) (actual vs predicted, tuned SVR), [heatmap_C_gamma.png](heatmap_C_gamma.png) (CV RMSE by C and gamma).
 
 The published notebook connects with `postgresql+psycopg2://postgres@localhost:5432/postgres`; the local Postgres password lives in `~/.pgpass` and is not in this repository.
+
+## Get the data
+
+Source: [Concrete Compressive Strength](https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength) (UCI Machine Learning Repository). The data file is not included in this repo.
+
+1. Download the dataset from the UCI page above and unzip it.
+2. Place `Concrete_Data.xls` in this folder (`projects/ml-regression/concrete-svr/`), next to `concrete_svr.ipynb`.
+3. Start a local PostgreSQL and run the notebook top to bottom.

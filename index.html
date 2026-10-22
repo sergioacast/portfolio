@@ -10,13 +10,40 @@
 <header class="site">
 <div class="wrap">
 <p class="brand"><a href="index.html">Sergio Castillo</a></p>
-<nav aria-label="Main"><a href="index.html" aria-current="page">Home</a> <a href="index.html#trading">Trading</a> <a href="index.html#analytics">Analytics</a> <a href="index.html#ml-regression">ML regression</a></nav>
+<nav aria-label="Main"><a href="index.html" aria-current="page">Home</a> <a href="index.html#analytics">Analytics</a> <a href="index.html#trading">Trading</a> <a href="index.html#ml-exercises">ML exercises</a></nav>
 </div>
 </header>
 <main class="wrap">
 <h1>Sergio Castillo — Data Analytics Portfolio</h1>
 <p class="lede">Data analyst working in Python and SQL/PostgreSQL.</p>
-<p class="links"><a href="#trading">Trading</a> · <a href="#analytics">Analytics</a> · <a href="#ml-regression">ML regression</a></p>
+<p class="links"><a href="#analytics">Analytics</a> · <a href="#trading">Trading</a> · <a href="#ml-exercises">ML exercises</a></p>
+<section id="analytics">
+<h2>Analytics</h2>
+<p class="lede">Exploratory and SQL analysis of public datasets.</p>
+<div class="cards">
+<article class="card">
+<h3><a href="projects/analytics/late-deliveries/index.html">Late Deliveries (Olist)</a></h3>
+<p class="q"><strong>Question:</strong> Which origin→destination routes and seller areas miss the promised delivery window most, and is lateness getting worse?</p>
+<p class="tools"><strong>Tools:</strong> Python, pandas, PostgreSQL, SQLAlchemy, SQL (CTEs, FILTER, BOOL_OR), matplotlib</p>
+<ul><li>Overall late rate: <strong>8.11%</strong> (7826 of 96470 late-eligible delivered orders); pandas and SQL agree.</li><li>Monthly late rate peaked at <strong>21.36%</strong> in March 2018 (15.99% in February 2018, 14.31% in November 2017).</li><li>In the Feb–Mar 2018 spike, <strong>SP→CE</strong> went from 9.43% late (normal) to <strong>48.95%</strong>.</li></ul>
+<p class="links"><a href="projects/analytics/late-deliveries/index.html">Project page</a> · <a href="projects/analytics/late-deliveries/notebook.html">Rendered notebook</a> · <a href="projects/analytics/late-deliveries/late_deliveries.ipynb" download>Download .ipynb</a></p>
+</article>
+<article class="card">
+<h3><a href="projects/analytics/superstore/index.html">Superstore EDA</a></h3>
+<p class="q"><strong>Question:</strong> Where does Superstore lose profit, how much of it is driven by discounting, and what would a 20% discount cap change?</p>
+<p class="tools"><strong>Tools:</strong> Python, pandas, matplotlib</p>
+<ul><li>Discounts above 20% lose money: 21–30% bin −$10,369, 31–50% −$48,448, 51–80% −$76,559 total profit.</li><li>Worst cell: <strong>Binders at 51–80% discount</strong>, −$38,510 profit on 613 lines. Tables lose −$17,725 overall.</li><li>A 20% discount cap (1393 lines affected) moves modelled profit from $286,397 to <strong>$505,588</strong>, assuming sales volume stays the same.</li></ul>
+<p class="links"><a href="projects/analytics/superstore/index.html">Project page</a> · <a href="projects/analytics/superstore/notebook.html">Rendered notebook</a> · <a href="projects/analytics/superstore/superstore_eda.ipynb" download>Download .ipynb</a></p>
+</article>
+<article class="card">
+<h3><a href="projects/analytics/nyc-airbnb/index.html">NYC Airbnb 2019</a></h3>
+<p class="q"><strong>Question:</strong> How are NYC Airbnb listing prices distributed, and how do they vary by borough, room type, reviews, availability and minimum nights?</p>
+<p class="tools"><strong>Tools:</strong> Python, pandas, NumPy, matplotlib</p>
+<ul><li>Prices range from $0 to $10,000; mean $152.72 vs median 106.0.</li><li>“Expensive typical” cell: <strong>Manhattan Entire home</strong>, median ~$191 on 13199 listings. Staten Island Entire’s high mean is a luxury-tail story (median ~$100).</li><li>availability_365 == 0 for <strong>17,533</strong> listings (~36%), kept rather than silently dropped.</li></ul>
+<p class="links"><a href="projects/analytics/nyc-airbnb/index.html">Project page</a> · <a href="projects/analytics/nyc-airbnb/notebook.html">Rendered notebook</a> · <a href="projects/analytics/nyc-airbnb/nyc_airbnb.ipynb" download>Download .ipynb</a></p>
+</article>
+</div>
+</section>
 <section id="trading">
 <h2>Trading</h2>
 <p class="lede">Strategy research and backtests, judged after costs.</p>
@@ -37,35 +64,8 @@
 </article>
 </div>
 </section>
-<section id="analytics">
-<h2>Analytics</h2>
-<p class="lede">Exploratory and SQL analysis of public datasets.</p>
-<div class="cards">
-<article class="card">
-<h3><a href="projects/analytics/late-deliveries/index.html">Late Deliveries (Olist)</a></h3>
-<p class="q"><strong>Question:</strong> Which origin→destination routes and seller areas miss the promised delivery window most, and is lateness getting worse?</p>
-<p class="tools"><strong>Tools:</strong> Python, pandas, PostgreSQL, SQLAlchemy, SQL (CTEs, FILTER, BOOL_OR), matplotlib</p>
-<ul><li>Overall late rate: <strong>8.11%</strong> (7826 of 96470 late-eligible delivered orders); pandas and SQL agree.</li><li>Monthly late rate peaked at <strong>21.36%</strong> in March 2018 (15.99% in February 2018, 14.31% in November 2017).</li><li>In the Feb–Mar 2018 spike, <strong>SP→CE</strong> went from 9.43% late (normal) to <strong>48.95%</strong>.</li></ul>
-<p class="links"><a href="projects/analytics/late-deliveries/index.html">Project page</a> · <a href="projects/analytics/late-deliveries/notebook.html">Rendered notebook</a> · <a href="projects/analytics/late-deliveries/late_deliveries.ipynb" download>Download .ipynb</a></p>
-</article>
-<article class="card">
-<h3><a href="projects/analytics/nyc-airbnb/index.html">NYC Airbnb 2019</a></h3>
-<p class="q"><strong>Question:</strong> How are NYC Airbnb listing prices distributed, and how do they vary by borough, room type, reviews, availability and minimum nights?</p>
-<p class="tools"><strong>Tools:</strong> Python, pandas, NumPy, matplotlib</p>
-<ul><li>Prices range from $0 to $10,000; mean 152.720687 vs median 106.0.</li><li>“Expensive typical” cell: <strong>Manhattan Entire home</strong>, median ~$191 on 13199 listings. Staten Island Entire’s high mean is a luxury-tail story (median ~$100).</li><li>availability_365 == 0 for <strong>17,533</strong> listings (~36%), kept rather than silently dropped.</li></ul>
-<p class="links"><a href="projects/analytics/nyc-airbnb/index.html">Project page</a> · <a href="projects/analytics/nyc-airbnb/notebook.html">Rendered notebook</a> · <a href="projects/analytics/nyc-airbnb/nyc_airbnb.ipynb" download>Download .ipynb</a></p>
-</article>
-<article class="card">
-<h3><a href="projects/analytics/superstore/index.html">Superstore EDA</a></h3>
-<p class="q"><strong>Question:</strong> Where does Superstore lose profit, how much of it is driven by discounting, and what would a 20% discount cap change?</p>
-<p class="tools"><strong>Tools:</strong> Python, pandas, matplotlib</p>
-<ul><li>Discounts above 20% lose money: 21–30% bin −10369.2774, 31–50% −48447.7273, 51–80% −76559.0513 total profit.</li><li>Worst cell: <strong>Binders at 51–80% discount</strong>, −38510.4964 profit on 613 lines. Tables lose −17725.4811 overall.</li><li>A 20% discount cap (1393 lines affected) moves modelled profit from 286397.0217 to <strong>505588.0159</strong>.</li></ul>
-<p class="links"><a href="projects/analytics/superstore/index.html">Project page</a> · <a href="projects/analytics/superstore/notebook.html">Rendered notebook</a> · <a href="projects/analytics/superstore/superstore_eda.ipynb" download>Download .ipynb</a></p>
-</article>
-</div>
-</section>
-<section id="ml-regression">
-<h2>ML regression</h2>
+<section id="ml-exercises">
+<h2>ML exercises</h2>
 <p class="lede">Four supervised regression exercises in Python and scikit-learn, each with data loaded into PostgreSQL and metrics logged with SQL.</p>
 <div class="cards">
 <article class="card">

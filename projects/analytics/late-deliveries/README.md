@@ -54,6 +54,14 @@ Numbers are taken directly from the notebook outputs.
 
 *Late rate by corridor: normal vs Feb–Mar 2018 spike (groups with 100+ orders)*
 
+## Get the data
+
+Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (Kaggle). The CSVs are not included in this repo.
+
+1. Download the dataset from the Kaggle page above and unzip it.
+2. Copy these four files into this folder (`projects/analytics/late-deliveries/`), next to `late_deliveries.ipynb`: `olist_orders_dataset.csv`, `olist_order_items_dataset.csv`, `olist_sellers_dataset.csv`, `olist_customers_dataset.csv`.
+3. Follow the Reproduce steps below (the notebook also needs a local PostgreSQL database `olist`).
+
 ## Reproduce
 
 1. Download the Olist CSVs from Kaggle (link above) into this folder. The CSVs are not included in this repo.

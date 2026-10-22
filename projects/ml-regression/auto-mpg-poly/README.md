@@ -23,3 +23,11 @@ Notebook: [mpg_PR.ipynb](mpg_PR.ipynb) · [Rendered notebook](notebook.html)
 Charts: [fitted_curves.png](fitted_curves.png) (blue linear, green degree 2, yellow degree 3), [rmse_by_degree.png](rmse_by_degree.png).
 
 The published notebook connects with `postgresql+psycopg2://postgres@localhost:5432/postgres`; the local Postgres password lives in `~/.pgpass` and is not in this repository.
+
+## Get the data
+
+Source: [Auto MPG](https://archive.ics.uci.edu/dataset/9/auto+mpg) (UCI Machine Learning Repository); CSV copy on [Kaggle](https://www.kaggle.com/datasets/uciml/autompg-dataset). The CSV is not included in this repo.
+
+1. Download `auto-mpg.csv` from the Kaggle page above.
+2. Place it in this folder (`projects/ml-regression/auto-mpg-poly/`), next to `mpg_PR.ipynb`.
+3. Start a local PostgreSQL and run the notebook top to bottom.

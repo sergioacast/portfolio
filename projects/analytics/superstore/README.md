@@ -22,13 +22,13 @@ Where does Superstore lose profit (sub-category, discount level, region × segme
 
 ## Key findings
 
-- Three sub-categories lose money overall: Tables −17725.4811, Bookcases −3472.5560, Supplies −1189.0995. The largest profits are Copiers 55617.8249, Phones 44515.7306 and Accessories 41936.6357.
-- Total profit by discount bin: 0% 320987.6032, 1–20% 100785.4745, 21–30% −10369.2774, 31–50% −48447.7273, 51–80% −76559.0513 (mean line margin −1.138785 in the top bin).
-- Worst sub-category × discount cells: Binders 51–80% −38510.4964 (613 lines), Tables 31–50% −27295.8952 (122 lines), Machines 51–80% −19579.3191 (23 lines).
+- Three sub-categories lose money overall: Tables −$17,725, Bookcases −$3,473, Supplies −$1,189. The largest profits are Copiers $55,618, Phones $44,516 and Accessories $41,937.
+- Total profit by discount bin: 0% $320,988, 1–20% $100,785, 21–30% −$10,369, 31–50% −$48,448, 51–80% −$76,559 (mean line margin −1.139 in the top bin).
+- Worst sub-category × discount cells: Binders 51–80% −$38,510 (613 lines), Tables 31–50% −$27,296 (122 lines), Machines 51–80% −$19,579 (23 lines).
 - 1871 of 9994 lines have negative profit.
-- By region × segment, the lowest profit is South Home Office (4620.6343) and the lowest margin is Central Consumer (0.033980, avg discount 0.252030).
-- By ship mode, margins range from 0.120812 (Standard Class) to 0.139345 (First Class).
-- 20% discount cap counterfactual: 1393 lines affected; profit 286397.0217 → 505588.0159 (delta 219190.99420000002). Largest deltas: Binders 78342.6510, Machines 55815.5800, Tables 29500.4280.
+- By region × segment, the lowest profit is South Home Office ($4,621) and the lowest margin is Central Consumer (0.034, avg discount 0.252).
+- By ship mode, margins range from 0.121 (Standard Class) to 0.139 (First Class).
+- 20% discount cap counterfactual: 1393 lines affected; profit $286,397 → $505,588 (delta +$219,191). Largest deltas: Binders +$78,343, Machines +$55,816, Tables +$29,500. This estimate assumes sales volume stays the same after the cap.
 
 Numbers are taken directly from the notebook outputs.
 
@@ -41,3 +41,11 @@ Numbers are taken directly from the notebook outputs.
 ![Profit by discount bin (Binders, Machines, Tables, Appliances)](profit_by_discount_bin.png)
 
 *Profit by discount bin (Binders, Machines, Tables, Appliances)*
+
+## Get the data
+
+Source: [Superstore Dataset](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final) (Kaggle). The CSV is not included in this repo.
+
+1. Download the dataset from the Kaggle page above and unzip it.
+2. Save the CSV in this folder (`projects/analytics/superstore/`) as `superstore.csv`, next to `superstore_eda.ipynb` (rename it if the download has a different name).
+3. Run the notebook top to bottom (it reads the file with `encoding="latin-1"`).
