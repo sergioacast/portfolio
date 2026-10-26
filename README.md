@@ -1,6 +1,6 @@
-# Sergio Castillo — Data Analytics Portfolio
+# Sergio Castillo — Data Engineering Portfolio
 
-Data analyst working in Python and SQL/PostgreSQL.
+Data engineer working in Python and SQL/PostgreSQL: loading, modeling and analyzing public datasets.
 
 **Live site:** https://sergioacast.github.io/portfolio/
 
