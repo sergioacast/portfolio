@@ -10,13 +10,13 @@
 <header class="site">
 <div class="wrap">
 <p class="brand"><a href="index.html">Sergio Castillo</a></p>
-<nav aria-label="Main"><a href="index.html" aria-current="page">Home</a> <a href="index.html#analytics">Analytics</a> <a href="index.html#trading">Trading</a> <a href="index.html#ml-exercises">ML exercises</a></nav>
+<nav aria-label="Main"><a href="index.html" aria-current="page">Home</a> <a href="index.html#analytics">Analytics</a> <a href="index.html#trading">Trading</a> <a href="index.html#ml-exercises">ML exercises</a> <a href="index.html#sports-analytics">Sports analytics</a></nav>
 </div>
 </header>
 <main class="wrap">
 <h1>Sergio Castillo — Data Analytics Portfolio</h1>
 <p class="lede">Data analyst working in Python and SQL/PostgreSQL.</p>
-<p class="links"><a href="#analytics">Analytics</a> · <a href="#trading">Trading</a> · <a href="#ml-exercises">ML exercises</a></p>
+<p class="links"><a href="#analytics">Analytics</a> · <a href="#trading">Trading</a> · <a href="#ml-exercises">ML exercises</a> · <a href="#sports-analytics">Sports analytics</a></p>
 <section id="analytics">
 <h2>Analytics</h2>
 <p class="lede">Exploratory and SQL analysis of public datasets.</p>
@@ -95,6 +95,19 @@
 <p class="tools"><strong>Tools:</strong> Python, pandas, NumPy, scikit-learn, PostgreSQL, SQLAlchemy, matplotlib, seaborn</p>
 <ul><li>Tuned RBF SVR (C=1000, epsilon=3, gamma=0.05): test RMSE <strong>5.84</strong> MPa, MAE 4.19, <strong>R² 0.868</strong>.</li><li>Beats linear (9.73) and degree-2 polynomial (7.38); unscaled SVR was worst at 14.16.</li></ul>
 <p class="links"><a href="projects/ml-regression/concrete-svr/index.html">Project page</a> · <a href="projects/ml-regression/concrete-svr/notebook.html">Rendered notebook</a> · <a href="projects/ml-regression/concrete-svr/concrete_svr.ipynb" download>Download .ipynb</a></p>
+</article>
+</div>
+</section>
+<section id="sports-analytics">
+<h2>Sports analytics</h2>
+<p class="lede">Football data from public sources, loaded into PostgreSQL.</p>
+<div class="cards">
+<article class="card">
+<h3><a href="projects/sports-analytics/ballon-dor-predictor/index.html">Ballon d&#x27;Or Predictor</a></h3>
+<p class="q"><strong>Question:</strong> Can player stats and team success predict who wins the Ballon d&#x27;Or?</p>
+<p class="tools"><strong>Tools:</strong> Python, pandas, PostgreSQL, SQLAlchemy, scikit-learn, soccerdata</p>
+<ul><li>Leave-one-season-out test on 15 seasons (2010–2025): goals baseline <strong>4/15</strong> top 1; logistic regression <strong>7/15</strong> top 1 and 9/15 top 3; random forest <strong>8-9/15</strong> top 1 depending on seed (42: 8, 0: 9, 1: 8), <strong>11/15</strong> top 3 in all three.</li><li>Misses: 2012 (Messi), 2018 (Modrić) and 2024 (Rodri) were never in the top 3; voter narrative is not in the features.</li><li>2026 prediction, <strong>not scored yet</strong> (the winner has not been announced): Lamine Yamal ranks first in 912 of 1,000 random-forest seeds.</li></ul>
+<p class="links"><a href="projects/sports-analytics/ballon-dor-predictor/index.html">Project page</a> · <a href="projects/sports-analytics/ballon-dor-predictor/index.html#notebooks">Rendered notebooks</a> · <a href="projects/sports-analytics/ballon-dor-predictor/README.md">Project README</a></p>
 </article>
 </div>
 </section>

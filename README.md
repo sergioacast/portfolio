@@ -110,6 +110,22 @@ Four supervised regression exercises (scikit-learn, data loaded into PostgreSQL)
 
 [Project README](projects/ml-regression/concrete-svr/README.md) · [Notebook (.ipynb)](projects/ml-regression/concrete-svr/concrete_svr.ipynb) · [Live page](https://sergioacast.github.io/portfolio/projects/ml-regression/concrete-svr/)
 
+## Sports analytics
+
+Football data from public sources, loaded into PostgreSQL.
+
+### [Ballon d'Or Predictor](projects/sports-analytics/ballon-dor-predictor/)
+
+**Question:** Can player stats and team success predict who wins the Ballon d'Or?
+
+**Tools:** Python, pandas, PostgreSQL, SQLAlchemy, scikit-learn, soccerdata
+
+- Leave-one-season-out test on 15 seasons (2010–2025): goals baseline **4/15** top 1; logistic regression **7/15** top 1 and 9/15 top 3; random forest **8-9/15** top 1 depending on seed (42: 8, 0: 9, 1: 8), **11/15** top 3 in all three.
+- Misses: 2012 (Messi), 2018 (Modrić) and 2024 (Rodri) were never in the top 3; voter narrative is not in the features.
+- 2026 prediction, **not scored yet** (the winner has not been announced): Lamine Yamal ranks first in 912 of 1,000 random-forest seeds.
+
+[Project README](projects/sports-analytics/ballon-dor-predictor/README.md) · [Notebooks](projects/sports-analytics/ballon-dor-predictor/notebooks/) · [Live page](https://sergioacast.github.io/portfolio/projects/sports-analytics/ballon-dor-predictor/)
+
 ## Repository structure
 
 ```
@@ -130,6 +146,8 @@ Four supervised regression exercises (scikit-learn, data loaded into PostgreSQL)
 │       ├── insurance-mlr/
 │       ├── auto-mpg-poly/
 │       └── concrete-svr/
+│   └── sports-analytics/
+│       └── ballon-dor-predictor/   project page, README, notebooks/
 └── README.md
 ```
 

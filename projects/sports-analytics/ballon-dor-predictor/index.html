@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ballon d&#x27;Or Predictor · Sergio Castillo</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<p class="brand"><a href="../../../index.html">Sergio Castillo</a></p>
+<nav aria-label="Main"><a href="../../../index.html">Home</a> <a href="../../../index.html#analytics">Analytics</a> <a href="../../../index.html#trading">Trading</a> <a href="../../../index.html#ml-exercises">ML exercises</a> <a href="../../../index.html#sports-analytics" aria-current="page">Sports analytics</a></nav>
+</div>
+</header>
+<main class="wrap">
+<h1>Ballon d&#x27;Or Predictor</h1>
+<p class="links"><a href="#notebooks">Rendered notebooks</a> · <a href="README.md">Project README</a> · <a href="#prediction-2026">2026 prediction</a> · <a href="../../../index.html#sports-analytics">All sports analytics</a></p>
+<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>The 2026 prediction is not scored yet.</strong> The 2026 winner has not been announced, so there is no result to compare it with. The accuracy figures below come from past seasons (2010–2025) only. See <a href="#prediction-2026">the 2026 prediction</a>.</div>
+<h2>Question</h2>
+<p>Can player stats and team success predict who wins the Ballon d&#x27;Or?</p>
+<h2>Data</h2>
+<ul><li><strong>Nominees and final ranks:</strong> Wikipedia, 2010–2025 (no 2020 edition). The 2026 nominees come from a hand-made CSV because there are no ranks yet.</li>
+<li><strong>Player stats:</strong> <a href="https://fbref.com">FBref</a> (Big 5 European leagues), pulled with <code>soccerdata</code>.</li>
+<li><strong>Hand-made tables:</strong> team success (league title and Champions League stage), international tournament stage, and name and club fixes.</li>
+<li><strong>Size:</strong> 408 labelled nominee rows (15 winners) plus 30 nominees for 2026.</li></ul>
+<p class="note">FBref and Wikipedia remain the property of their owners; this project is for learning and portfolio use. The raw data, loader scripts and SQL schema are not published here; the notebooks are shown as saved.</p>
+<h2>Method</h2>
+<p class="tools"><strong>Tools:</strong> Python, pandas, scikit-learn, SQLAlchemy, PostgreSQL, soccerdata, Jupyter</p>
+<ul><li>The data is loaded into a PostgreSQL database. The <code>ballon_dor_features</code> view has one row per nominee per season: 408 labelled rows plus 30 for 2026.</li>
+<li>Features (from the notes): goals, assists, minutes, Champions League stage (0–6), international tournament stage (0–6), league title, a <code>has_stats</code> flag and the main position. Nominees outside the Big 5 get <code>has_stats = 0</code> and median-filled values.</li>
+<li>With only 15 winners in 408 rows, accuracy would be misleading. Evaluation is <strong>leave-one-season-out</strong>: train on 14 seasons, predict the 15th, and count how often the real winner is ranked first (top 1) or in the top 3.</li>
+<li>Three models: a baseline (the player with the most goals), logistic regression (scaled, balanced) and a random forest (200 trees, balanced).</li></ul>
+<h2>Results (leave-one-season-out, 15 seasons)</h2>
+<table><thead><tr><th>Model</th><th>Top 1</th><th>Top 3</th></tr></thead><tbody>
+<tr><td>Baseline (player with most goals)</td><td>4/15</td><td>not measured</td></tr>
+<tr><td>Logistic regression</td><td>7/15</td><td>9/15</td></tr>
+<tr><td>Random forest (200 trees, balanced)</td><td><strong>8-9/15</strong> (42: 8, 0: 9, 1: 8)</td><td><strong>11/15</strong> (all three seeds)</td></tr>
+</tbody></table>
+<p class="note">Random forest: 8-9/15 top 1 depending on seed (42: 8, 0: 9, 1: 8), 11/15 top 3 in all three. Seed 0 is the saved output in notebook 05, which also prints the baseline count of 4.</p>
+<p>Strongest logistic regression coefficients (printed in notebook 05): Champions League stage 1.93, goals 1.78, international stage 1.32. Minutes is near 0.</p>
+<h2>Misses and limitations</h2>
+<ul><li><strong>Misses:</strong> 2012 (Messi), 2018 (Modrić) and 2024 (Rodri) were never in the top 3. Voter narrative and star power are not in the features.</li>
+<li>2025 (Dembélé) changes with the seed, so it is not a stable prediction. 2021 and 2023 (Messi) are the &quot;best stats vs. voters&quot; cases.</li>
+<li><strong>Small sample:</strong> 15 winners.</li>
+<li><strong>No voter or narrative features</strong> (for example news or social sentiment); a possible v2.</li>
+<li><strong>Stats cover Big 5 league players only.</strong> The 12 nominees outside them (Santos, Ajax, Benfica, Sporting) have no FBref stats, and 3 of the 30 nominees for 2026 (Messi, Mané, Quiñones) are in the same position.</li>
+<li>No xG or xA: FBref via soccerdata no longer provides them.</li></ul>
+<h2 id="prediction-2026">2026 prediction</h2>
+<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>Not scored yet.</strong> The 2026 winner has not been announced. This ranking is unverified until the award is given; when it is, the winner&#x27;s rank here can be compared with the random forest&#x27;s 8-9/15 top 1 (depending on seed) and 11/15 top 3 from the past seasons.</div>
+<p>A random forest (200 trees, balanced, seed 1) trained on all 408 labelled rows ranks the 30 nominees for 2026. Top 5 by probability of winning:</p>
+<table><thead><tr><th>#</th><th>Player</th><th>Club</th><th>Probability</th></tr></thead><tbody><tr><td>1</td><td>Lamine Yamal</td><td>Barcelona</td><td>0.115</td></tr><tr><td>2</td><td>Harry Kane</td><td>Bayern Munich</td><td>0.050</td></tr><tr><td>3</td><td>Ferran Torres</td><td>Barcelona</td><td>0.035</td></tr><tr><td>4</td><td>Fabián Ruiz Peña</td><td>Paris Saint-Germain</td><td>0.030</td></tr><tr><td>5</td><td>Ousmane Dembélé</td><td>Paris Saint-Germain</td><td>0.030</td></tr></tbody></table>
+<p><strong>Stability check:</strong> the same forest was trained 1,000 times (seeds 0 to 999). The first-ranked nominee each time:</p>
+<table><thead><tr><th>Player</th><th>Seeds ranked first (of 1,000)</th></tr></thead><tbody><tr><td>Lamine Yamal</td><td>912</td></tr><tr><td>Harry Kane</td><td>72</td></tr><tr><td>Ousmane Dembélé</td><td>13</td></tr><tr><td>Fabián Ruiz Peña</td><td>2</td></tr><tr><td>Ferran Torres</td><td>1</td></tr></tbody></table>
+<ul><li>Lamine Yamal is first in 912 of 1,000 seeds, so within this model he is a stable top pick. This measures the forest&#x27;s consistency only: every run shares the same data and features, so it does not cover the blind spots (voter narrative, star power).</li>
+<li>Probabilities are small because only 15 of 408 training rows are winners. Only the ranking matters.</li>
+<li>Ranks 3 to 10 are close and likely change with the seed. Ferran Torres and Fabián Ruiz rank high mostly through team and tournament success, the same blind spot as 2012, 2018 and 2024.</li></ul>
+<details><summary>All 30 nominees (predictions_2026, shown as a table)</summary>
+<table><thead><tr><th>#</th><th>Player</th><th>Club</th><th>Probability</th></tr></thead><tbody><tr><td>1</td><td>Lamine Yamal</td><td>Barcelona</td><td>0.115</td></tr><tr><td>2</td><td>Harry Kane</td><td>Bayern Munich</td><td>0.050</td></tr><tr><td>3</td><td>Ferran Torres</td><td>Barcelona</td><td>0.035</td></tr><tr><td>4</td><td>Fabián Ruiz Peña</td><td>Paris Saint-Germain</td><td>0.030</td></tr><tr><td>5</td><td>Ousmane Dembélé</td><td>Paris Saint-Germain</td><td>0.030</td></tr><tr><td>6</td><td>Khvicha Kvaratskhelia</td><td>Paris Saint-Germain</td><td>0.020</td></tr><tr><td>7</td><td>Michael Olise</td><td>Bayern Munich</td><td>0.020</td></tr><tr><td>8</td><td>Pau Cubarsí</td><td>Barcelona</td><td>0.015</td></tr><tr><td>9</td><td>Vitinha</td><td>Paris Saint-Germain</td><td>0.015</td></tr><tr><td>10</td><td>Kylian Mbappé</td><td>Real Madrid</td><td>0.010</td></tr><tr><td>11</td><td>Lionel Messi</td><td>Inter Miami</td><td>0.010</td></tr><tr><td>12</td><td>Achraf Hakimi</td><td>Paris Saint-Germain</td><td>0.005</td></tr><tr><td>13</td><td>Bruno Fernandes</td><td>Manchester United</td><td>0.005</td></tr><tr><td>14</td><td>Declan Rice</td><td>Arsenal</td><td>0.005</td></tr><tr><td>15</td><td>Erling Haaland</td><td>Manchester City</td><td>0.005</td></tr><tr><td>16</td><td>Lautaro Martínez</td><td>Internazionale</td><td>0.005</td></tr><tr><td>17</td><td>Marc Cucurella</td><td>Chelsea</td><td>0.005</td></tr><tr><td>18</td><td>Rodri</td><td>Manchester City</td><td>0.005</td></tr><tr><td>19</td><td>Dayot Upamecano</td><td>Bayern Munich</td><td>0.000</td></tr><tr><td>20</td><td>Gabriel Magalhães</td><td>Arsenal</td><td>0.000</td></tr><tr><td>21</td><td>João Neves</td><td>Paris Saint-Germain</td><td>0.000</td></tr><tr><td>22</td><td>Jude Bellingham</td><td>Real Madrid</td><td>0.000</td></tr><tr><td>23</td><td>Julián Quiñones</td><td>Al-Qadsiah</td><td>0.000</td></tr><tr><td>24</td><td>Luis Díaz</td><td>Bayern Munich</td><td>0.000</td></tr><tr><td>25</td><td>Marquinhos</td><td>Paris Saint-Germain</td><td>0.000</td></tr><tr><td>26</td><td>Nuno Mendes</td><td>Paris Saint-Germain</td><td>0.000</td></tr><tr><td>27</td><td>Sadio Mané</td><td>Al Nassr</td><td>0.000</td></tr><tr><td>28</td><td>Vinicius Júnior</td><td>Real Madrid</td><td>0.000</td></tr><tr><td>29</td><td>William Saliba</td><td>Arsenal</td><td>0.000</td></tr><tr><td>30</td><td>Willian Pacho</td><td>Paris Saint-Germain</td><td>0.000</td></tr></tbody></table>
+</details>
+<h2 id="notebooks">Notebooks</h2>
+<table><thead><tr><th>Notebook</th><th>What it does</th><th>Links</th></tr></thead><tbody>
+<tr><td>01_fbref_explore</td><td>Pulls FBref player-season stats for the Big 5 leagues (2009-10 to 2024-25) with soccerdata, maps each season to its award year, cleans columns and duplicates<br><span class="note">18 code cells, 12 with outputs</span></td><td><a href="notebooks/01_fbref_explore.html">Rendered</a> · <a href="notebooks/01_fbref_explore.ipynb" download>.ipynb</a></td></tr><tr><td>02_name_matching</td><td>Merges nominees with the FBref stats by player and season, lists the nominees with no match, and applies the 5-name fix<br><span class="note">5 code cells, 2 with outputs</span></td><td><a href="notebooks/02_name_matching.html">Rendered</a> · <a href="notebooks/02_name_matching.ipynb" download>.ipynb</a></td></tr><tr><td>03_team_success_explore</td><td>Builds the <code>won_league</code> column from Wikipedia champion lists and checks club names against the nominees<br><span class="note">28 code cells, 18 with outputs</span></td><td><a href="notebooks/03_team_success_explore.html">Rendered</a> · <a href="notebooks/03_team_success_explore.ipynb" download>.ipynb</a></td></tr><tr><td>04_intl_tournaments_explore</td><td>Builds the World Cup stage (0 to 6) for each season and nation from Wikipedia finals and knockout brackets<br><span class="note">29 code cells, 20 with outputs</span></td><td><a href="notebooks/04_intl_tournaments_explore.html">Rendered</a> · <a href="notebooks/04_intl_tournaments_explore.ipynb" download>.ipynb</a></td></tr><tr><td>05_features_explore</td><td>Loads the <code>ballon_dor_features</code> view (408 rows), fills missing stats, runs the goals baseline and the leave-one-season-out loop, prints the logistic coefficients<br><span class="note">17 code cells, 13 with outputs</span></td><td><a href="notebooks/05_features_explore.html">Rendered</a> · <a href="notebooks/05_features_explore.ipynb" download>.ipynb</a></td></tr><tr><td>06_2026_nominees</td><td>Reads the 2026 nominees from Wikipedia and the 2025-26 FBref stats (2,839 rows), ready to load into the database<br><span class="note">13 code cells, 8 with outputs</span></td><td><a href="notebooks/06_2026_nominees.html">Rendered</a> · <a href="notebooks/06_2026_nominees.ipynb" download>.ipynb</a></td></tr><tr><td>07_predict_2026</td><td>Trains the random forest on all 408 labelled rows, ranks the 30 nominees for 2026 and runs the 1,000-seed stability check<br><span class="note">20 code cells, 10 with outputs</span></td><td><a href="notebooks/07_predict_2026.html">Rendered</a> · <a href="notebooks/07_predict_2026.ipynb" download>.ipynb</a></td></tr>
+</tbody></table>
+<p class="note">Rendered from the saved outputs (no re-execution). Local file paths in the saved outputs were replaced with &quot;...&quot;; nothing else was changed. The notebooks read the database connection from a local <code>.env</code> file and contain no credentials. Notebooks 01–06 are the exploration log and were not designed to be re-run in order; notebook 07 is the one to run top to bottom. They show printed previews of the Wikipedia and FBref data.</p>
+<p>How to run and the full write-up: see the <a href="README.md">project README</a>.</p>
+</main>
+<footer class="wrap"><p>Sergio Castillo · Data Analytics Portfolio</p></footer>
+</body>
+</html>
