@@ -16,7 +16,7 @@
 <main class="wrap">
 <h1>Ballon d&#x27;Or Predictor</h1>
 <p class="links"><a href="#notebooks">Rendered notebooks</a> · <a href="README.md">Project README</a> · <a href="#prediction-2026">2026 prediction</a> · <a href="../../../index.html#sports-analytics">All sports analytics</a></p>
-<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>The 2026 prediction is not scored yet.</strong> The 2026 winner has not been announced, so there is no result to compare it with. The accuracy figures below come from past seasons (2010–2025) only. See <a href="#prediction-2026">the 2026 prediction</a>.</div>
+<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>The 2026 prediction is now scored.</strong> Kane won; the model had him 2nd and picked Yamal, who finished 3rd, so top 1 is a miss and top 3 is a hit. The accuracy figures below come from past seasons (2010–2025) only. See <a href="#prediction-2026">the 2026 prediction and result</a>.</div>
 <h2>Question</h2>
 <p>Can player stats and team success predict who wins the Ballon d&#x27;Or?</p>
 <h2>Data</h2>
@@ -47,12 +47,12 @@
 <li><strong>Stats cover Big 5 league players only.</strong> The 12 nominees outside them (Santos, Ajax, Benfica, Sporting) have no FBref stats, and 3 of the 30 nominees for 2026 (Messi, Mané, Quiñones) are in the same position.</li>
 <li>No xG or xA: FBref via soccerdata no longer provides them.</li></ul>
 <h2 id="prediction-2026">2026 prediction</h2>
-<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>Not scored yet.</strong> The 2026 winner has not been announced. This ranking is unverified until the award is given; when it is, the winner&#x27;s rank here can be compared with the random forest&#x27;s 8-9/15 top 1 (depending on seed) and 11/15 top 3 from the past seasons.</div>
+<div style="border-left:4px solid #b45309;background:#fff7ed;padding:.6rem .9rem;margin:1rem 0"><strong>Scored.</strong> Real 2026 order, as reported by Sergio on 26 Oct 2026: 1. Harry Kane, 2. Kylian Mbappé, 3. Lamine Yamal. The model&#x27;s ranking: Yamal 1st (0.115), Kane 2nd (0.050), Mbappé tied for 10th with Messi (0.010).<br><strong>Top 1: miss</strong> (picked Yamal, who finished 3rd). <strong>Top 3: hit</strong> (the winner, Kane, was 2nd). The real runner-up, Mbappé, was only tied for 10th. Including this year, the random forest&#x27;s top 3 record is 12 of 16 seasons; the leave-one-season-out numbers (8-9/15 top 1 depending on seed, 11/15 top 3) are unchanged.</div>
 <p>A random forest (200 trees, balanced, seed 1) trained on all 408 labelled rows ranks the 30 nominees for 2026. Top 5 by probability of winning:</p>
 <table><thead><tr><th>#</th><th>Player</th><th>Club</th><th>Probability</th></tr></thead><tbody><tr><td>1</td><td>Lamine Yamal</td><td>Barcelona</td><td>0.115</td></tr><tr><td>2</td><td>Harry Kane</td><td>Bayern Munich</td><td>0.050</td></tr><tr><td>3</td><td>Ferran Torres</td><td>Barcelona</td><td>0.035</td></tr><tr><td>4</td><td>Fabián Ruiz Peña</td><td>Paris Saint-Germain</td><td>0.030</td></tr><tr><td>5</td><td>Ousmane Dembélé</td><td>Paris Saint-Germain</td><td>0.030</td></tr></tbody></table>
 <p><strong>Stability check:</strong> the same forest was trained 1,000 times (seeds 0 to 999). The first-ranked nominee each time:</p>
 <table><thead><tr><th>Player</th><th>Seeds ranked first (of 1,000)</th></tr></thead><tbody><tr><td>Lamine Yamal</td><td>912</td></tr><tr><td>Harry Kane</td><td>72</td></tr><tr><td>Ousmane Dembélé</td><td>13</td></tr><tr><td>Fabián Ruiz Peña</td><td>2</td></tr><tr><td>Ferran Torres</td><td>1</td></tr></tbody></table>
-<ul><li>Lamine Yamal is first in 912 of 1,000 seeds, so within this model he is a stable top pick. This measures the forest&#x27;s consistency only: every run shares the same data and features, so it does not cover the blind spots (voter narrative, star power).</li>
+<ul><li>Lamine Yamal is first in 912 of 1,000 seeds, so within this model he was a stable top pick. Kane, the real winner, was first in only 72 (7%). This measures the forest&#x27;s consistency only: every run shares the same data and features, so it does not cover the blind spots (voter narrative, star power).</li>
 <li>Probabilities are small because only 15 of 408 training rows are winners. Only the ranking matters.</li>
 <li>Ranks 3 to 10 are close and likely change with the seed. Ferran Torres and Fabián Ruiz rank high mostly through team and tournament success, the same blind spot as 2012, 2018 and 2024.</li></ul>
 <details><summary>All 30 nominees (predictions_2026, shown as a table)</summary>

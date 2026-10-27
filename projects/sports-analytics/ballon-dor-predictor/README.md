@@ -34,7 +34,7 @@ Misses: 2012 (Messi), 2018 (Modric) and 2024 (Rodri) were never in the top 3. Vo
 ## 2026 prediction
 Random forest trained on all 408 labelled rows. Top 5 by probability: Lamine Yamal (0.115), Harry Kane (0.050), Ferran Torres (0.035), Fabian Ruiz (0.030), Ousmane Dembele (0.030). Over 1000 random seeds, Yamal ranked first 912 times and Kane 72 times.
 
-This is **not scored yet**: the 2026 winner has not been announced. See `data/predictions_2026.csv` and `data/mc_top_counts_2026.csv`.
+**Scored** (real order reported by Sergio on 2026-10-26: 1. Harry Kane, 2. Kylian Mbappe, 3. Lamine Yamal). The model ranked Yamal 1st, Kane 2nd and Mbappe tied for 10th with Messi (0.010). Top 1 is a miss (Yamal finished 3rd) and top 3 is a hit (the winner, Kane, was 2nd). Including this year the top 3 record is 12 of 16 seasons. The leave-one-season-out numbers above are unchanged. See `data/predictions_2026.csv` and `data/mc_top_counts_2026.csv`.
 
 ## How to run
 1. Create a Python environment (3.12 was used) and install the dependencies: `pip install -r requirements.txt`.
@@ -48,7 +48,7 @@ This is **not scored yet**: the 2026 winner has not been announced. See `data/pr
 - Small sample: 15 winners.
 - No voter or narrative features (for example news or social sentiment); a possible v2.
 - Stats cover Big 5 league players only. Players outside them get a `has_stats = 0` flag and median-filled values.
-- The 2026 prediction is unverified until the award is announced.
+- The 2026 prediction is now scored (top 1 miss, top 3 hit); one season is too small a sample to change the model comparison.
 
 ## License
 Code is released under the MIT License (see `LICENSE`). The underlying data belongs to FBref and Wikipedia and is not covered by this license.
